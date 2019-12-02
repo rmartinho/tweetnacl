@@ -1,12 +1,14 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
+import nacl from './../nacl-fast-es.js';
+import test from './teston.mjs';
+import util from './nacl-util.mjs'
 
-test('nacl.randomBytes', function(t) {
+test('nacl.randomBytes', async function(t) {
   t.plan(1);
   var set = {}, s, i;
+
   for (i = 0; i < 10000; i++) {
-    s = nacl.util.encodeBase64(nacl.randomBytes(32));
+
+    s = util.encodeBase64(nacl.randomBytes(32));
     if (set[s]) {
       t.fail('duplicate random sequence! ', s);
       return;

@@ -1,23 +1,19 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
-
-var randomVectors = require('./data/box.random');
-
-var enc = nacl.util.encodeBase64,
-    dec = nacl.util.decodeBase64;
+import nacl from './../nacl-fast-es.js';
+import test from './teston.mjs';
+import randomVectors from './data/box.random';
+import util from './nacl-util.mjs'
 
 test('nacl.box random test vectors', function(t) {
+  t.plan(randomVectors.length*2);
   var nonce = new Uint8Array(nacl.box.nonceLength);
   randomVectors.forEach(function(vec) {
-    var pk1 = dec(vec[0]);
-    var sk2 = dec(vec[1]);
-    var msg = dec(vec[2]);
-    var goodBox = dec(vec[3]);
+    var pk1 = util.decodeBase64(vec[0]);
+    var sk2 = util.decodeBase64(vec[1]);
+    var msg = util.decodeBase64(vec[2]);
+    var goodBox = util.decodeBase64(vec[3]);
     var box = nacl.box(msg, nonce, pk1, sk2);
-    t.equal(enc(box), enc(goodBox));
+    t.equal(util.decodeBase64(box), util.decodeBase64(goodBox));
     var openedBox = nacl.box.open(goodBox, nonce, pk1, sk2);
-    t.equal(enc(openedBox), enc(msg));
+    t.equal(util.decodeBase64(openedBox), util.decodeBase64(msg));
   });
-  t.end();
 });

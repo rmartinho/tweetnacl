@@ -1,18 +1,14 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
-
-var randomVectors = require('./data/hash.random');
-
-var enc = nacl.util.encodeBase64,
-    dec = nacl.util.decodeBase64;
+import nacl from './../nacl-fast-es.js';
+import test from './teston.mjs';
+import randomVectors from './data/hash.random';
+import util from './nacl-util.mjs'
 
 test('nacl.hash random test vectors', function(t) {
+  t.plan(randomVectors.length);
   randomVectors.forEach(function(vec) {
-    var msg = dec(vec[0]);
-    var goodHash = dec(vec[1]);
+    var msg = util.decodeBase64(vec[0]);
+    var goodHash = util.decodeBase64(vec[1]);
     var hash = nacl.hash(msg);
-    t.equal(enc(hash), enc(goodHash));
+    t.equal(util.encodeBase64(hash), util.encodeBase64(goodHash));
   });
-  t.end();
 });

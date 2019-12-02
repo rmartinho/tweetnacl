@@ -1,13 +1,10 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
-
-var randomVectors = require('./data/scalarmult.random');
-
-var enc = nacl.util.encodeBase64,
-    dec = nacl.util.decodeBase64;
+import nacl from './../nacl-fast-es.js';
+import test from './teston.mjs';
+import randomVectors from './data/scalarmult.random';
+import util from './nacl-util.mjs'
 
 test('nacl.scalarMult.base', function(t) {
+  t.plan(1);
   // This takes takes a bit of time.
   // Similar to https://code.google.com/p/go/source/browse/curve25519/curve25519_test.go?repo=crypto
   var golden = new Uint8Array([0x89, 0x16, 0x1f, 0xde, 0x88, 0x7b, 0x2b, 0x53, 0xde, 0x54,
@@ -18,26 +15,25 @@ test('nacl.scalarMult.base', function(t) {
   for (var i = 0; i < 200; i++) {
     input = nacl.scalarMult.base(input);
   }
-  t.equal(enc(input), enc(golden));
-  t.end();
+  t.equal(util.encodeBase64(input), util.encodeBase64(golden));
 });
 
 test('nacl.scalarMult and nacl.scalarMult.base random test vectors', function(t) {
+  t.plan(randomVectors.length*4);
   randomVectors.forEach(function(vec) {
-    var pk1 = dec(vec[0]);
-    var sk1 = dec(vec[1]);
-    var pk2 = dec(vec[2]);
-    var sk2 = dec(vec[3]);
-    var out = dec(vec[4]);
+    var pk1 = util.decodeBase64(vec[0]);
+    var sk1 = util.decodeBase64(vec[1]);
+    var pk2 = util.decodeBase64(vec[2]);
+    var sk2 = util.decodeBase64(vec[3]);
+    var out = util.decodeBase64(vec[4]);
 
     var jpk1 = nacl.scalarMult.base(sk1);
-    t.equal(enc(jpk1), enc(pk1));
+    t.equal(util.encodeBase64(jpk1), util.encodeBase64(pk1));
     var jpk2 = nacl.scalarMult.base(sk2);
-    t.equal(enc(jpk2), enc(pk2));
+    t.equal(util.encodeBase64(jpk2), util.encodeBase64(pk2));
     var jout1 = nacl.scalarMult(sk1, pk2);
-    t.equal(enc(jout1), enc(out));
+    t.equal(util.encodeBase64(jout1), util.encodeBase64(out));
     var jout2 = nacl.scalarMult(sk2, pk1);
-    t.equal(enc(jout2), enc(out));
+    t.equal(util.encodeBase64(jout2), util.encodeBase64(out));
   });
-  t.end();
 });
