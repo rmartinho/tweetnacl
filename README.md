@@ -2,7 +2,7 @@ TweetNaCl.js
 ============
 
 ES6 version of the [tweetnacl-js](https://github.com/dchest/tweetnacl-js) `nacl-fast.js`
-Workees in browser and in node (with "-r esm")
+Work in browser and in node (with "-r esm")
 
 Documentation
 =============
@@ -12,7 +12,7 @@ See [tweetnacl-js](https://github.com/dchest/tweetnacl-js)
 Usage
 -----
 
-    import ncl from './tweetnacl-js-es6.js';
+    import nacl from './tweetnacl-js-es6.js';
 
 All API functions accept and return bytes as `Uint8Array`s.  If you need to
 encode or decode strings, use functions from
@@ -296,7 +296,7 @@ To run test in Node.js:
 
 To run itest in browser:
 
-[test-quick.html]()
+[browser test](https://hakanols.github.io/tweetnacl-js-es6/test/browser/index.html)
 
 ### Benchmarking
 
@@ -306,7 +306,7 @@ To run benchmarks in Node.js:
 
 To run itest in browser:
 
-
+[browser benchmarks](https://hakanols.github.io/tweetnacl-js-es6/test/benchmark/bench.html)
 
 Contributors
 ------------
