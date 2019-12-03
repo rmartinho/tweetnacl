@@ -170,6 +170,17 @@ var createTest = function (parent, depth) {
       t.fail(message || 'deep equal');
     }
   };
+  
+  t.throws = function (throwingFunction, errorType, message) {
+    if ( message === void 0 ) message = "Correct error type";
+
+    try {
+      throwingFunction();
+      t.fail("This shall never execute");
+    } catch (e) {
+      t.equal(e.name, errorType.name, message);
+    }
+  };
 
   t.createTest = createTest;
 
@@ -220,7 +231,7 @@ var introduceParents = function (t) {
       parent.introduced = true;
       if (parent.description) {
         console.log('');
-        console.log(indent(parent.depth), parent.description);
+        console.log(indent(parent.depth) + parent.description);
       }
     }
   }

@@ -1,8 +1,7 @@
 import nacl from './../nacl-fast-es.js';
-import test from './teston.mjs';
+import test from './helpers/teston.mjs';
 import specVectors from './data/hash.spec.js';
-import util from './nacl-util.mjs';
-import {throws} from "./test-util.mjs";
+import util from './helpers/nacl-util.mjs';
 
 test('nacl.hash length', function(t) {
   t.plan(2);
@@ -12,8 +11,8 @@ test('nacl.hash length', function(t) {
 
 test('nacl.hash exceptions for bad types', function(t) {
   t.plan(2);
-  throws(t, function() { nacl.hash('string'); }, TypeError);
-  throws(t, function() { nacl.hash([1,2,3]); }, TypeError);
+  t.throws(function() { nacl.hash('string'); }, TypeError);
+  t.throws(function() { nacl.hash([1,2,3]); }, TypeError);
 });
 
 test('nacl.hash specified test vectors', function(t) {

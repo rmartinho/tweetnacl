@@ -1,7 +1,7 @@
 import nacl from './../nacl-fast-es.js';
-import test from './teston.mjs';
+import test from './helpers/teston.mjs';
 import randomVectors from './data/scalarmult.random.js';
-import util from './nacl-util.mjs'
+import util from './helpers/nacl-util.mjs'
 
 test('nacl.scalarMult.base', function(t) {
   t.plan(1);

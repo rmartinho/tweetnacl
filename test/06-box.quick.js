@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
-import test from './teston.mjs';
-import util from './nacl-util.mjs'
+import test from './helpers/teston.mjs';
+import util from './helpers/nacl-util.mjs'
 
 test('nacl.box.keyPair', function(t) {
   t.plan(3);

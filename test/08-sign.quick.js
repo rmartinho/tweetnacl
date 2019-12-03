@@ -1,7 +1,6 @@
 import nacl from './../nacl-fast-es.js';
-import test from './teston.mjs';
-import util from './nacl-util.mjs';
-import {throws} from "./test-util.mjs";
+import test from './helpers/teston.mjs';
+import util from './helpers/nacl-util.mjs';
 
 test('nacl.sign.keyPair', function(t) {
   t.plan(4);
@@ -38,7 +37,7 @@ test('nacl.sign.keyPair.fromSeed', function(t) {
   t.equal(k3.publicKey.length, nacl.sign.publicKeyLength);
   t.notOk(util.encodeBase64(k3.secretKey) === util.encodeBase64(k1.secretKey));
   t.notOk(util.encodeBase64(k3.publicKey) === util.encodeBase64(k1.publicKey));
-  throws(t, function() { nacl.sign.keyPair.fromSeed(seed2.subarray(0, 16)); }, Error, 'should throw error for wrong seed size');
+  t.throws(function() { nacl.sign.keyPair.fromSeed(seed2.subarray(0, 16)); }, Error, 'should throw error for wrong seed size');
 });
 
 test('nacl.sign and nacl.sign.open', function(t) {
@@ -51,7 +50,7 @@ test('nacl.sign and nacl.sign.open', function(t) {
   t.ok(sm.length > m.length, 'signed message length should be greater than message length');
   var om = nacl.sign.open(sm, k.publicKey);
   t.deepEqual(om, m);
-  throws(t, function() { nacl.sign.open(sm, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
+  t.throws(function() { nacl.sign.open(sm, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
   var badPublicKey = new Uint8Array(k.publicKey.length);
   om = nacl.sign.open(sm, badPublicKey);
   t.equal(om, null, 'opened message must be null when using wrong public key');
@@ -70,8 +69,8 @@ test('nacl.sign.detached and nacl.sign.detached.verify', function(t) {
   t.ok(sig.length === nacl.sign.signatureLength, 'signature must have correct length');
   var result = nacl.sign.detached.verify(m, sig, k.publicKey);
   t.ok(result, 'signature must be verified');
-  throws(t, function() { nacl.sign.detached.verify(m, sig, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
-  throws(t, function() { nacl.sign.detached.verify(m, sig.subarray(1), k.publicKey); }, Error, 'throws error for wrong signature size');
+  t.throws(function() { nacl.sign.detached.verify(m, sig, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
+  t.throws(function() { nacl.sign.detached.verify(m, sig.subarray(1), k.publicKey); }, Error, 'throws error for wrong signature size');
   var badPublicKey = new Uint8Array(k.publicKey.length);
   result = nacl.sign.detached.verify(m, sig, badPublicKey);
   t.equal(result, false, 'signature must not be verified with wrong public key');

@@ -2,6 +2,9 @@ List of TweetNaCl.js authors
 ============================
 
     Format: Name (GitHub username or URL)
+    
+(es6)
+* Håkan Olsson (@hakanols)
 
 * Dmitry Chestnykh (@dchest)
 * Devi Mandiri (@devi)
