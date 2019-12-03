@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import randomVectors from './data/box.random';
+import randomVectors from './data/box.random.js';
 import util from './nacl-util.mjs'
 
 test('nacl.box random test vectors', function(t) {
@@ -12,8 +12,8 @@ test('nacl.box random test vectors', function(t) {
     var msg = util.decodeBase64(vec[2]);
     var goodBox = util.decodeBase64(vec[3]);
     var box = nacl.box(msg, nonce, pk1, sk2);
-    t.equal(util.decodeBase64(box), util.decodeBase64(goodBox));
+    t.equal(util.encodeBase64(box), util.encodeBase64(goodBox));
     var openedBox = nacl.box.open(goodBox, nonce, pk1, sk2);
-    t.equal(util.decodeBase64(openedBox), util.decodeBase64(msg));
+    t.equal(util.encodeBase64(openedBox), util.encodeBase64(msg));
   });
 });

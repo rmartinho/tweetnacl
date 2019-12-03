@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import {throws} from "./test-util";
+import {throws} from "./test-util.mjs";
 
 var nonce = new Uint8Array(nacl.secretbox.nonceLength);
 var key = new Uint8Array(nacl.secretbox.keyLength);

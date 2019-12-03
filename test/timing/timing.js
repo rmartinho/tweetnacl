@@ -1,11 +1,11 @@
 // Measures timing variations and displays them
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
+import nacl from './../../nacl-fast-es.js';
+import test from './../teston.mjs';
 
-var hex = function(x) { return Buffer.from(x).toString('hex'); }
+var hex = function(x) { return Buffer.from(x).toString('hex'); };
 
 test('nacl.scalarMult timings', function(t) {
+  t.plan(1);
   function measure(x, prev) {
     var avgdiff = 0;
     for (var k = 0; k < 10; k++) {
@@ -39,7 +39,7 @@ test('nacl.scalarMult timings', function(t) {
       prev: prev
     });
   }
-  diffs.sort(function (a, b) { return a.diff - b.diff; })
+  diffs.sort(function (a, b) { return a.diff - b.diff; });
   var lo = diffs[0], hi = diffs[diffs.length-1];
   console.log('Lowest : ' + lo.diff + 'ms');
   console.log(hex(lo.x), hex(lo.prev));
@@ -54,6 +54,5 @@ test('nacl.scalarMult timings', function(t) {
   console.log('Re-test low: ' + rlo + 'ms');
   console.log('Re-test high: ' + rhi + 'ms');
   console.log('New difference: ' + (rhi - rlo) + 'ms');
-
-  t.end();
+  t.pass();
 });

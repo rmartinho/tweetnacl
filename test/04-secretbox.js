@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import randomVectors from './data/secretbox.random';
+import randomVectors from './data/secretbox.random.js';
 import util from './nacl-util.mjs'
 
 test('nacl.secretbox random test vectors', function(t) {

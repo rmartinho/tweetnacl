@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import specVectors from './data/sign.spec';
+import specVectors from './data/sign.spec.js';
 import util from './nacl-util.mjs'
 
 test('nacl.sign and nacl.sign.open specified vectors', function(t) {

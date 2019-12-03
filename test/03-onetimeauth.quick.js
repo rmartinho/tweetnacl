@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import specVectors from './data/onetimeauth.spec';
+import specVectors from './data/onetimeauth.spec.js';
 import util from './nacl-util.mjs'
 
 test('nacl.lowlevel.crypto_onetimeauth specified vectors', function (t) {

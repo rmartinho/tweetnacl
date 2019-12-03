@@ -1,7 +1,7 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
 import util from './nacl-util.mjs';
-import {throws} from "./test-util";
+import {throws} from "./test-util.mjs";
 
 test('nacl.sign.keyPair', function(t) {
   t.plan(4);

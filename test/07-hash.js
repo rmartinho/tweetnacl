@@ -1,6 +1,6 @@
 import nacl from './../nacl-fast-es.js';
 import test from './teston.mjs';
-import randomVectors from './data/hash.random';
+import randomVectors from './data/hash.random.js';
 import util from './nacl-util.mjs'
 
 test('nacl.hash random test vectors', function(t) {
