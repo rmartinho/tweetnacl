@@ -41,7 +41,7 @@ var deepEqual = function (a, b) {
 var id = 0;
 
 var nextTick = function (cb) {
-  if (process && process.nextTick) {
+  if (typeof process !== "undefined" && process && process.nextTick) {
     process.nextTick(cb);
   } else {
     setTimeout(cb, 0);
@@ -191,10 +191,10 @@ var RESET = '\x1b[0m';
 var RED = '\x1b[31m';
 
 var green = function (str) {
-  return GREEN + str + RESET;
+  return (typeof window !== "undefined")? str : GREEN + str + RESET;
 };
 var red = function (str) {
-  return RED + str + RESET;
+  return (typeof window !== "undefined")? str : RED + str + RESET;
 };
 
 var planned = 0;
@@ -234,7 +234,7 @@ var index = createTest({
   passed: function passed$1 (t, message) {
     passed++;
     introduceParents(t);
-    console.log(indent(t.depth) + green(' ✔︎ ' + message));
+    console.log(indent(t.depth) + green('✔ ' + message));
   },
   failed: function failed (t, message) {
     console.log(t);
@@ -251,7 +251,7 @@ var index = createTest({
         }
         this$1.ready = true;
         console.log('');
-        console.log(green('♥︎ All tests passed! ♥︎'));
+        console.log(green('♥ All tests passed! ♥'));
       }
     });
   }

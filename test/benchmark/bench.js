@@ -1,6 +1,6 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-var helpers = (typeof require !== 'undefined') ? require('./helpers') : window.helpers;
-var log = helpers.log;
+import nacl from './../../nacl-fast-es.js';
+import * as helpers from './helpers.js';
+const log = (typeof window === "undefined") ? new helpers.NodeLogger() : new helpers.BrowserLogger();
 
 if (!nacl) throw new Error('nacl not loaded');
 

@@ -11,7 +11,6 @@
     "build": "uglifyjs nacl.js -c -m -o nacl.min.js && uglifyjs nacl-fast.js -c -m -o nacl-fast.min.js",
     "test-node": "tape test/*.js | faucet",
     "test-node-all": "make -C test/c && tape test/*.js test/c/*.js | faucet",
-    "build-test-browser": "browserify test/browser/init.js test/*.js | uglifyjs -c -m -o test/browser/_bundle.js 2>/dev/null && browserify test/browser/init.js test/*.quick.js | uglifyjs -c -m -o test/browser/_bundle-quick.js 2>/dev/null",
     "test": "npm run test-node-all",
     "bench": "node test/benchmark/bench.js",
     "lint": "eslint nacl.js nacl-fast.js test/*.js test/benchmark/*.js"

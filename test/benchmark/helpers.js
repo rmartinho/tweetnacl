@@ -1,7 +1,4 @@
-// Test helpers.
-(function(exports) {
-
-function NodeLogger() {
+export function NodeLogger() {
   this.print = function() {
     console.log.apply(console, arguments);
   };
@@ -18,7 +15,7 @@ function NodeLogger() {
   this.start = this.print.bind(this, '\n');
 }
 
-function BrowserLogger() {
+export function BrowserLogger() {
   var el = document.createElement('pre');
   document.body.appendChild(el);
 
@@ -53,10 +50,3 @@ function BrowserLogger() {
 
   this.start = this.print.bind(this, '\n');
 }
-
-if (typeof window !== 'undefined')
-  exports.log = new BrowserLogger();
-else
-  exports.log = new NodeLogger();
-
-})(typeof exports !== 'undefined' ? exports : (window.helpers = window.helpers || {}));
