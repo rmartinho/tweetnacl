@@ -1,9 +1,9 @@
 var NUMBER_OF_TESTS = 1000;
 
-var nacl = require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-var execFile = require('child_process').execFile;
-var path = require('path');
-var test = require('tape');
+import nacl from './../../nacl-fast-es.js';
+import {execFile} from 'child_process';
+import path from 'path';
+import test from 'tape';
 
 function cscalarmult(n, p, callback) {
   var hexN = (new Buffer(n)).toString('hex');

@@ -1,8 +1,8 @@
-var nacl = require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var spawn = require('child_process').spawn;
-var path = require('path');
-var test = require('tape');
+import nacl from './../../nacl-fast-es.js';
+import util from './../helpers/nacl-util.js'
+import {spawn,} from 'child_process';
+import path from 'path';
+import test from 'tape';
 
 function csecretbox(msg, n, k, callback) {
   var hexk = (new Buffer(k)).toString('hex');
@@ -31,10 +31,10 @@ test('nacl.secretbox (C)', function(t) {
 
   function check(num, maxNum, next) {
     var msg = nacl.randomBytes(num);
-    var box = nacl.util.encodeBase64(nacl.secretbox(msg, n, k));
+    var box = util.encodeBase64(nacl.secretbox(msg, n, k));
     csecretbox(new Buffer(msg), n, k, function(boxFromC) {
       t.equal(box, boxFromC, 'secretboxes should be equal');
-      t.notEqual(nacl.secretbox.open(nacl.util.decodeBase64(boxFromC), n, k), false, 'opening should succeed');
+      t.notEqual(nacl.secretbox.open(util.decodeBase64(boxFromC), n, k), false, 'opening should succeed');
       if (num >= maxNum) {
         if (next) next();
         return;

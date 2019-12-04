@@ -1,8 +1,8 @@
-var nacl = require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var spawn = require('child_process').spawn;
-var path = require('path');
-var test = require('tape');
+import nacl from './../../nacl-fast-es.js';
+import util from './../helpers/nacl-util.js'
+import {spawn} from 'child_process';
+import path from 'path';
+import test from 'tape';
 
 function csign(sk, msg, callback) {
   var hexsk = (new Buffer(sk)).toString('hex');
@@ -25,12 +25,12 @@ test('nacl.sign (C)', function(t) {
   function check(num) {
     var keys = nacl.sign.keyPair();
     var msg = nacl.randomBytes(num);
-    var signedMsg = nacl.util.encodeBase64(nacl.sign(msg, keys.secretKey));
+    var signedMsg = util.encodeBase64(nacl.sign(msg, keys.secretKey));
     csign(keys.secretKey, new Buffer(msg), function(signedFromC) {
       t.equal(signedMsg, signedFromC, 'signed messages should be equal');
-      var openedMsg = nacl.sign.open(nacl.util.decodeBase64(signedFromC), keys.publicKey);
+      var openedMsg = nacl.sign.open(util.decodeBase64(signedFromC), keys.publicKey);
       t.notEqual(openedMsg, null, 'open should succeed');
-      t.equal(nacl.util.encodeBase64(openedMsg), nacl.util.encodeBase64(msg),
+      t.equal(util.encodeBase64(openedMsg), util.encodeBase64(msg),
             'messages should be equal');
       if (num >= 100) {
         t.end();

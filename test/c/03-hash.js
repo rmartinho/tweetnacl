@@ -1,8 +1,7 @@
-var nacl = require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-var crypto = require('crypto');
-var spawn = require('child_process').spawn;
-var path = require('path');
-var test = require('tape');
+import nacl from './../../nacl-fast-es.js';
+import {spawn} from 'child_process';
+import path from 'path';
+import test from 'tape';
 
 function chash(msg, callback) {
   var p = spawn(path.resolve(__dirname, 'chash'));

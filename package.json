@@ -9,6 +9,7 @@
   "scripts": {
     "test-all": "node -r esm test/test-all.js",
     "test-quick": "node -r esm test/test-quick.js",
+    "test-browser": "node -r browser-quick-start /test/browser/test-quick.html",
     "bench": "node -r esm test/benchmark/bench.js"
   },
   "repository": {
@@ -35,7 +36,6 @@
   "devDependencies": {
     "esm": "^3.2.25",
     "tape": "^4.11.0",
-    "open": "^7.0.0",
-    "simplatic-http-server": "^1.1.1"
+    "child_process": "^1.0.2"
   }
 }
