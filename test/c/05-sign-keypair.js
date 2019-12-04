@@ -1,13 +1,21 @@
-var nacl = require('../../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var spawn = require('child_process').spawn;
-var execFile = require('child_process').execFile;
-var path = require('path');
+import nacl from './../../nacl-fast-es.js';
+//import test from './../helpers/teston.js';
+import util from './../helpers/nacl-util.js'
+import {spawn, execFile} from 'child_process';
+import path from 'path';
 var test = require('tape');
+import {c} from 'compile-run'
+
+console.log(c)
+
+console.log(spawn)
+console.log(path.resolve(__dirname, 'csign'))
 
 function csign(sk, msg, callback) {
   var hexsk = (new Buffer(sk)).toString('hex');
-  var p = spawn(path.resolve(__dirname, 'csign'), [hexsk]);
+  console.log(hexsk)
+  var p = spawn(path.resolve(__dirname, 'csign.c'), [hexsk]);
+  console.log("svin")
   var result = [];
   p.stdout.on('data', function(data) {
     result.push(data);
@@ -16,17 +24,20 @@ function csign(sk, msg, callback) {
     callback(Buffer.concat(result).toString('base64'));
   });
   p.on('error', function(err) {
+    console.log("gris")
     throw err;
   });
   p.stdin.write(msg);
   p.stdin.end();
 }
 
-function csignkeypair(callback) {
-  execFile(path.resolve(__dirname, 'csign-keypair'), [], function(err, stdout) {
-    if (err) throw err;
-    callback(stdout.toString('utf8'));
-  });
+async function csignkeypair(callback) {
+  let filePath = path.resolve(__dirname, 'csign-keypair.c')
+  console.log("2" + filePath)
+
+  let result = await c.runFile(filePath)
+  console.log("3", result);
+  callback(result)
 }
 
 test('nacl.sign (C) with keypair from C', function(t) {
@@ -36,7 +47,7 @@ test('nacl.sign (C) with keypair from C', function(t) {
       var b = new Buffer(hexSecretKey, 'hex');
       for (var i = 0; i < b.length; i++) secretKey[i] = b[i];
       var msg = nacl.randomBytes(num);
-      var signedMsg = nacl.util.encodeBase64(nacl.sign(msg, secretKey));
+      var signedMsg = util.encodeBase64(nacl.sign(msg, secretKey));
       csign(secretKey, new Buffer(msg), function(signedFromC) {
         t.equal(signedMsg, signedFromC, 'signed messages should be equal');
         if (num >= 100) {
@@ -47,6 +58,15 @@ test('nacl.sign (C) with keypair from C', function(t) {
       });
     });
   }
+
+  /*
+  let filePath = path.resolve(__dirname, './../test-quick.js')
+  console.log(filePath)
+  execFile("node", ["-r", "esm", filePath], function(err, stdout) {
+    console.log("broo")
+    console.log(stdout)
+    if (err) throw err;
+  });*/
 
   check(0);
 });

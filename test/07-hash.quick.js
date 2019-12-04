@@ -1,7 +1,7 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.mjs';
+import test from './helpers/teston.js';
 import specVectors from './data/hash.spec.js';
-import util from './helpers/nacl-util.mjs';
+import util from './helpers/nacl-util.js';
 
 test('nacl.hash length', function(t) {
   t.plan(2);

@@ -1,7 +1,7 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.mjs';
+import test from './helpers/teston.js';
 import randomVectors from './data/secretbox.random.js';
-import util from './helpers/nacl-util.mjs'
+import util from './helpers/nacl-util.js'
 
 test('nacl.secretbox random test vectors', function(t) {
   t.plan(randomVectors.length*4);

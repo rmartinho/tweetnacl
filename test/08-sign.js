@@ -1,7 +1,7 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.mjs';
+import test from './helpers/teston.js';
 import specVectors from './data/sign.spec.js';
-import util from './helpers/nacl-util.mjs'
+import util from './helpers/nacl-util.js'
 
 test('nacl.sign and nacl.sign.open specified vectors', function(t) {
   t.plan(specVectors.length*2);

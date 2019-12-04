@@ -1,5 +1,5 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.mjs';
+import test from './helpers/teston.js';
 
 test('nacl.verify', function(t) {
   t.plan(7);

@@ -1,6 +1,6 @@
 // Measures timing variations and displays them
 import nacl from './../../nacl-fast-es.js';
-import test from './../teston.mjs';
+import test from './../helpers/teston.js';
 
 var hex = function(x) { return Buffer.from(x).toString('hex'); };
 
