@@ -9,9 +9,9 @@
   "scripts": {
     "test-all": "node -r esm test/test-all.js",
     "test-quick": "node -r esm test/test-quick.js",
-    "test-browser": "node -r esm node_modules/@hakanols/browser-quick-start/browser-quick-start.js /test/browser/test-quick.html",
+    "test-browser": "node -r esm node_modules/browser-quick-start /test/browser/test-quick.html",
     "bench": "node -r esm test/benchmark/bench.js",
-    "bench-browser": "node -r esm node_modules/@hakanols/browser-quick-start/browser-quick-start.js /test/benchmark/bench.html"
+    "bench-browser": "node -r esm node_modules/browser-quick-start /test/benchmark/bench.html"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,6 @@
     "esm": "^3.2.25",
     "tape": "^4.11.0",
     "child_process": "^1.0.2",
-    "@hakanols/browser-quick-start": "^1.0.0"
+    "browser-quick-start": "^1.0.1"
   }
 }
