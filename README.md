@@ -12,7 +12,7 @@ See [tweetnacl-js](https://github.com/dchest/tweetnacl-js)
 Usage
 -----
 
-    import nacl from './tweetnacl-js-es6.js';
+    import nacl from './tweetnacl-es6.js';
 
 All API functions accept and return bytes as `Uint8Array`s.  If you need to
 encode or decode strings, use functions from
