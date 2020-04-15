@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hakanols/tweetnacl-js.git"
+    "url": "https://github.com/hakanols/tweetnacl-es6"
   },
   "keywords": [
     "crypto",
