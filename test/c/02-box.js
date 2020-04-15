@@ -1,4 +1,5 @@
 import nacl from './../../nacl-fast-es.js';
+import util from './../helpers/nacl-util.js';
 import {spawn} from 'child_process';
 import path from 'path';
 import test from 'tape';
@@ -29,10 +30,10 @@ test('nacl.box (C)', function(t) {
     var sk2 = nacl.randomBytes(nacl.box.secretKeyLength);
     var msg = nacl.randomBytes(num);
     var nonce = nacl.randomBytes(24);
-    var box = nacl.util.encodeBase64(nacl.box(msg, nonce, k1.publicKey, sk2));
+    var box = util.encodeBase64(nacl.box(msg, nonce, k1.publicKey, sk2));
     cbox(new Buffer(msg), sk2, k1.publicKey, nonce, function(boxFromC) {
       t.equal(box, boxFromC, 'boxes should be equal');
-      t.notEqual(nacl.box.open(nacl.util.decodeBase64(boxFromC), nonce, k1.publicKey, sk2),
+      t.notEqual(nacl.box.open(util.decodeBase64(boxFromC), nonce, k1.publicKey, sk2),
                 false, 'opening box should succeed');
       if (num >= maxNum) {
         if (next) next();

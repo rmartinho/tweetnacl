@@ -17,22 +17,22 @@ csign-keypair: csign-keypair.o tweetnacl.o
 test: test_secretbox test_scalarmult test_box test_hash test_sign test_signkeypair clean
 
 test_secretbox: csecretbox
-	node ./00-secretbox.js
+	node -r esm ./00-secretbox.js
 
 test_scalarmult: cscalarmult
-	node ./01-scalarmult.js
+	node -r esm ./01-scalarmult.js
 
 test_box: cbox
-	node ./02-box.js
+	node -r esm ./02-box.js
 
 test_hash: chash
-	node ./03-hash.js
+	node -r esm ./03-hash.js
 
 test_sign: csign
-	node ./04-sign.js
+	node -r esm ./04-sign.js
 
 test_signkeypair: csign csign-keypair
-	node ./05-sign-keypair.js
+	node -r esm ./05-sign-keypair.js
 
 clean:
 	rm *.o csecretbox cscalarmult cbox chash csign csign-keypair

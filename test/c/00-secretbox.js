@@ -1,6 +1,6 @@
 import nacl from './../../nacl-fast-es.js';
 import util from './../helpers/nacl-util.js'
-import {spawn,} from 'child_process';
+import {spawn} from 'child_process';
 import path from 'path';
 import test from 'tape';
 
