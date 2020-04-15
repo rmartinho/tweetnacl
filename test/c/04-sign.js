@@ -2,7 +2,7 @@ import nacl from './../../nacl-fast-es.js';
 import util from './../helpers/nacl-util.js';
 import {spawn} from 'child_process';
 import path from 'path';
-import test from 'tape';
+import test from './../helpers/teston.js';
 
 function csign(sk, msg, callback) {
   var hexsk = (new Buffer(sk)).toString('hex');
@@ -29,16 +29,17 @@ test('nacl.sign (C)', function(t) {
     csign(keys.secretKey, new Buffer(msg), function(signedFromC) {
       t.equal(signedMsg, signedFromC, 'signed messages should be equal');
       var openedMsg = nacl.sign.open(util.decodeBase64(signedFromC), keys.publicKey);
-      t.notEqual(openedMsg, null, 'open should succeed');
+      t.ok(openedMsg!==null, 'open should succeed');
       t.equal(util.encodeBase64(openedMsg), util.encodeBase64(msg),
             'messages should be equal');
       if (num >= 100) {
-        t.end();
         return;
       }
       check(num+1);
     });
   }
 
+  t.timeout = 20000;
+  t.plan(303);
   check(0);
 });

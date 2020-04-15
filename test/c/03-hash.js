@@ -1,7 +1,7 @@
 import nacl from './../../nacl-fast-es.js';
 import {spawn} from 'child_process';
 import path from 'path';
-import test from 'tape';
+import test from './../helpers/teston.js';
 
 function chash(msg, callback) {
   var p = spawn(path.resolve(__dirname, 'chash'));
@@ -27,12 +27,13 @@ test('nacl.hash (C)', function(t) {
     chash(new Buffer(msg), function(hexCH) {
       t.equal(hexH, hexCH, 'hashes should be equal');
       if (num >= 1000) {
-        t.end();
         return;
       }
       check(num+1);
     });
   }
 
+  t.timeout = 100000;
+  t.plan(1001);
   check(0);
 });

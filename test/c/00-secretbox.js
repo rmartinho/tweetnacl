@@ -2,7 +2,7 @@ import nacl from './../../nacl-fast-es.js';
 import util from './../helpers/nacl-util.js'
 import {spawn} from 'child_process';
 import path from 'path';
-import test from 'tape';
+import test from './../helpers/teston.js';
 
 function csecretbox(msg, n, k, callback) {
   var hexk = (new Buffer(k)).toString('hex');
@@ -34,7 +34,7 @@ test('nacl.secretbox (C)', function(t) {
     var box = util.encodeBase64(nacl.secretbox(msg, n, k));
     csecretbox(new Buffer(msg), n, k, function(boxFromC) {
       t.equal(box, boxFromC, 'secretboxes should be equal');
-      t.notEqual(nacl.secretbox.open(util.decodeBase64(boxFromC), n, k), false, 'opening should succeed');
+	  t.ok(nacl.secretbox.open(util.decodeBase64(boxFromC), n, k), 'opening should succeed');
       if (num >= maxNum) {
         if (next) next();
         return;
@@ -43,10 +43,12 @@ test('nacl.secretbox (C)', function(t) {
     });
   }
 
+  t.timeout = 100000;
+  t.plan(2218);
   check(0, 1024, function() {
     check(16418, 16500, function() {
       check(1000000, 0, function() {
-        t.end();
+
       });
     });
   });

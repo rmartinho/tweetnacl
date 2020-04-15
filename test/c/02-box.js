@@ -2,7 +2,7 @@ import nacl from './../../nacl-fast-es.js';
 import util from './../helpers/nacl-util.js';
 import {spawn} from 'child_process';
 import path from 'path';
-import test from 'tape';
+import test from './../helpers/teston.js';
 
 function cbox(msg, sk, pk, n, callback) {
   var hexsk = (new Buffer(sk)).toString('hex');
@@ -33,8 +33,8 @@ test('nacl.box (C)', function(t) {
     var box = util.encodeBase64(nacl.box(msg, nonce, k1.publicKey, sk2));
     cbox(new Buffer(msg), sk2, k1.publicKey, nonce, function(boxFromC) {
       t.equal(box, boxFromC, 'boxes should be equal');
-      t.notEqual(nacl.box.open(util.decodeBase64(boxFromC), nonce, k1.publicKey, sk2),
-                false, 'opening box should succeed');
+      t.ok(nacl.box.open(util.decodeBase64(boxFromC), nonce, k1.publicKey, sk2),
+                'opening box should succeed');
       if (num >= maxNum) {
         if (next) next();
         return;
@@ -42,10 +42,10 @@ test('nacl.box (C)', function(t) {
       check(num+1, maxNum, next);
     });
   }
-
+  
+  t.timeout = 120000;
+  t.plan(2218);
   check(0, 1024, function() {
-    check(16417, 16500, function() {
-      t.end();
-    });
+    check(16417, 16500, function() {});
   });
 });

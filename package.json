@@ -36,8 +36,6 @@
   "homepage": "https://tweetnacl.js.org",
   "devDependencies": {
     "esm": "^3.2.25",
-    "tape": "^4.11.0",
-    "child_process": "^1.0.2",
-    "browser-quick-start": "^1.0.1"
+    "child_process": "^1.0.2"
   }
 }

@@ -2,7 +2,7 @@ import nacl from './../../nacl-fast-es.js';
 import util from './../helpers/nacl-util.js';
 import {execFile} from 'child_process';
 import path from 'path';
-import test from 'tape';
+import test from './../helpers/teston.js';
 
 var NUMBER_OF_TESTS = 1000;
 
@@ -34,12 +34,13 @@ test('nacl.scalarMult (C)', function(t) {
     cscalarmult(k1.secretKey, k2.publicKey, function(cQ) {
       t.equal(hexQ, cQ);
       if (num >= NUMBER_OF_TESTS) {
-        t.end();
         return;
       }
       check(num+1);
     });
   }
-
+  
+  t.timeout = 100000;
+  t.plan(NUMBER_OF_TESTS*2+2);
   check(0);
 });
