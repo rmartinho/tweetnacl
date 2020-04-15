@@ -1,5 +1,5 @@
 {
-  "name": "tweetnacl",
+  "name": "tweetnacl-es6",
   "version": "1.0.0",
   "description": "Port of TweetNaCl cryptographic library to JavaScript es6",
   "main": "nacl-fast-es.js",
@@ -9,9 +9,9 @@
   "scripts": {
     "test-all": "node -r esm test/test-all.js",
     "test-quick": "node -r esm test/test-quick.js",
-    "test-browser": "node -r esm test/helpers/browser-quick-start /test/browser/index.html",
+    "test-browser": "node -r esm node_modules/browser-quick-start /test/browser/index.html",
     "bench": "node -r esm test/benchmark/bench.js",
-    "bench-browser": "node -r esm test/helpers/browser-quick-start /test/benchmark/bench.html"
+    "bench-browser": "node -r esm node_modules/browser-quick-start /test/benchmark/bench.html"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
   "homepage": "https://tweetnacl.js.org",
   "devDependencies": {
     "esm": "^3.2.25",
-    "child_process": "^1.0.2"
+    "child_process": "^1.0.2",
+    "browser-quick-start": "^1.0.1"
   }
 }
