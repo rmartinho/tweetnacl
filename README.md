@@ -296,7 +296,7 @@ To run test in Node.js:
 
 To run itest in browser:
 
-[browser test](https://hakanols.github.io/tweetnacl-js-es6/test/browser/index.html)
+[browser test](https://hakanols.github.io/tweetnacl-es6/test/browser/index.html)
 
 ### Benchmarking
 
@@ -306,7 +306,7 @@ To run benchmarks in Node.js:
 
 To run itest in browser:
 
-[browser benchmarks](https://hakanols.github.io/tweetnacl-js-es6/test/benchmark/bench.html)
+[browser benchmarks](https://hakanols.github.io/tweetnacl-es6/test/benchmark/bench.html)
 
 Contributors
 ------------
