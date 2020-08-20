@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Port of TweetNaCl cryptographic library to JavaScript es6",
   "main": "nacl-fast-es.js",
+  "module": "nacl-fast-es.js",
   "directories": {
     "test": "test"
   },
