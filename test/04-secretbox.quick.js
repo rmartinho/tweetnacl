@@ -1,9 +1,8 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import util from './helpers/nacl-util.js'
 
 test('nacl.secretbox and nacl.secretbox.open', function(t) {
-  t.plan(1);
   var key = new Uint8Array(nacl.secretbox.keyLength);
   var nonce = new Uint8Array(nacl.secretbox.nonceLength);
   var i;
@@ -13,19 +12,19 @@ test('nacl.secretbox and nacl.secretbox.open', function(t) {
   var box = nacl.secretbox(msg, nonce, key);
   var openedMsg = nacl.secretbox.open(box, nonce, key);
   t.equal(util.encodeUTF8(openedMsg), util.encodeUTF8(msg), 'opened messages should be equal');
+  t.end();
 });
 
 test('nacl.secretbox.open with invalid box', function(t) {
-  t.plan(3);
   var key = new Uint8Array(nacl.secretbox.keyLength);
   var nonce = new Uint8Array(nacl.secretbox.nonceLength);
   t.equal(nacl.secretbox.open(new Uint8Array(0), nonce, key), null);
   t.equal(nacl.secretbox.open(new Uint8Array(10), nonce, key), null);
   t.equal(nacl.secretbox.open(new Uint8Array(100), nonce, key), null);
+  t.end();
 });
 
 test('nacl.secretbox.open with invalid nonce', function(t) {
-  t.plan(2);
   var key = new Uint8Array(nacl.secretbox.keyLength);
   var nonce = new Uint8Array(nacl.secretbox.nonceLength);
   for (var i = 0; i < nonce.length; i++) nonce[i] = i & 0xff;
@@ -35,10 +34,10 @@ test('nacl.secretbox.open with invalid nonce', function(t) {
           util.encodeUTF8(msg));
   nonce[0] = 255;
   t.equal(nacl.secretbox.open(box, nonce, key), null);
+  t.end();
 });
 
 test('nacl.secretbox.open with invalid key', function(t) {
-  t.plan(2);
   var key = new Uint8Array(nacl.secretbox.keyLength);
   for (var i = 0; i < key.length; i++) key[i] = i & 0xff;
   var nonce = new Uint8Array(nacl.secretbox.nonceLength);
@@ -48,10 +47,10 @@ test('nacl.secretbox.open with invalid key', function(t) {
           util.encodeUTF8(msg));
   key[0] = 255;
   t.equal(nacl.secretbox.open(box, nonce, key), null);
+  t.end();
 });
 
 test('nacl.secretbox with message lengths of 0 to 1024', function(t) {
-  t.plan(1024);
   var key = new Uint8Array(nacl.secretbox.keyLength);
   var i;
   for (i = 0; i < key.length; i++) key[i] = i & 0xff;
@@ -64,4 +63,5 @@ test('nacl.secretbox with message lengths of 0 to 1024', function(t) {
     var unbox = nacl.secretbox.open(box, nonce, key);
     t.equal(util.encodeBase64(msg), util.encodeBase64(unbox));
   }
+  t.end();
 });

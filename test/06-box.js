@@ -1,10 +1,9 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import randomVectors from './data/box.random.js';
 import util from './helpers/nacl-util.js'
 
 test('nacl.box random test vectors', function(t) {
-  t.plan(randomVectors.length*2);
   var nonce = new Uint8Array(nacl.box.nonceLength);
   randomVectors.forEach(function(vec) {
     var pk1 = util.decodeBase64(vec[0]);
@@ -16,4 +15,5 @@ test('nacl.box random test vectors', function(t) {
     var openedBox = nacl.box.open(goodBox, nonce, pk1, sk2);
     t.equal(util.encodeBase64(openedBox), util.encodeBase64(msg));
   });
+  t.end();
 });

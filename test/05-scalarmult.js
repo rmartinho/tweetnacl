@@ -1,10 +1,9 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import randomVectors from './data/scalarmult.random.js';
 import util from './helpers/nacl-util.js'
 
 test('nacl.scalarMult.base', function(t) {
-  t.plan(1);
   // This takes takes a bit of time.
   // Similar to https://code.google.com/p/go/source/browse/curve25519/curve25519_test.go?repo=crypto
   var golden = new Uint8Array([0x89, 0x16, 0x1f, 0xde, 0x88, 0x7b, 0x2b, 0x53, 0xde, 0x54,
@@ -16,10 +15,10 @@ test('nacl.scalarMult.base', function(t) {
     input = nacl.scalarMult.base(input);
   }
   t.equal(util.encodeBase64(input), util.encodeBase64(golden));
+  t.end();
 });
 
 test('nacl.scalarMult and nacl.scalarMult.base random test vectors', function(t) {
-  t.plan(randomVectors.length*4);
   randomVectors.forEach(function(vec) {
     var pk1 = util.decodeBase64(vec[0]);
     var sk1 = util.decodeBase64(vec[1]);
@@ -36,4 +35,5 @@ test('nacl.scalarMult and nacl.scalarMult.base random test vectors', function(t)
     var jout2 = nacl.scalarMult(sk2, pk1);
     t.equal(util.encodeBase64(jout2), util.encodeBase64(out));
   });
+  t.end();
 });

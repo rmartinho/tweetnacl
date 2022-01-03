@@ -9,4 +9,4 @@ the particular the format.
 
 Usage in tests:
 
-var blaVectors = require('./data/bla.random.js');
+import blaVectors from './data/bla.random.js';

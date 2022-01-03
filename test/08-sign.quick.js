@@ -1,27 +1,26 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import util from './helpers/nacl-util.js';
 
 test('nacl.sign.keyPair', function(t) {
-  t.plan(4);
   var keys = nacl.sign.keyPair();
   t.ok(keys.secretKey && keys.secretKey.length === nacl.sign.secretKeyLength, 'has secret key');
   t.ok(keys.publicKey && keys.publicKey.length === nacl.sign.publicKeyLength, 'has public key');
   t.notOk(util.encodeBase64(keys.secretKey) === util.encodeBase64(keys.publicKey));
   var newKeys = nacl.sign.keyPair();
   t.notOk(util.encodeBase64(newKeys.secretKey) === util.encodeBase64(keys.secretKey), 'two keys differ');
+  t.end();
 });
 
 test('nacl.sign.keyPair.fromSecretKey', function(t) {
-  t.plan(2);
   var k1 = nacl.sign.keyPair();
   var k2 = nacl.sign.keyPair.fromSecretKey(k1.secretKey);
   t.equal(util.encodeBase64(k2.secretKey), util.encodeBase64(k1.secretKey));
   t.equal(util.encodeBase64(k2.publicKey), util.encodeBase64(k1.publicKey));
+  t.end();
 });
 
 test('nacl.sign.keyPair.fromSeed', function(t) {
-  t.plan(11);
   var seed = nacl.randomBytes(nacl.sign.seedLength);
   var k1 = nacl.sign.keyPair.fromSeed(seed);
   var k2 = nacl.sign.keyPair.fromSeed(seed);
@@ -38,10 +37,10 @@ test('nacl.sign.keyPair.fromSeed', function(t) {
   t.notOk(util.encodeBase64(k3.secretKey) === util.encodeBase64(k1.secretKey));
   t.notOk(util.encodeBase64(k3.publicKey) === util.encodeBase64(k1.publicKey));
   t.throws(function() { nacl.sign.keyPair.fromSeed(seed2.subarray(0, 16)); }, Error, 'should throw error for wrong seed size');
+  t.end();
 });
 
 test('nacl.sign and nacl.sign.open', function(t) {
-  t.plan(5);
   var k = nacl.sign.keyPair();
   var m = new Uint8Array(100);
   var i;
@@ -49,7 +48,7 @@ test('nacl.sign and nacl.sign.open', function(t) {
   var sm = nacl.sign(m, k.secretKey);
   t.ok(sm.length > m.length, 'signed message length should be greater than message length');
   var om = nacl.sign.open(sm, k.publicKey);
-  t.deepEqual(om, m);
+  t.arrayEqual(om, m);
   t.throws(function() { nacl.sign.open(sm, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
   var badPublicKey = new Uint8Array(k.publicKey.length);
   om = nacl.sign.open(sm, badPublicKey);
@@ -57,10 +56,10 @@ test('nacl.sign and nacl.sign.open', function(t) {
   for (i = 80; i < 90; i++) sm[i] = 0;
   om = nacl.sign.open(sm, k.publicKey);
   t.equal(om, null, 'opened message must be null when opening bad signed message');
+  t.end();
 });
 
 test('nacl.sign.detached and nacl.sign.detached.verify', function(t) {
-  t.plan(6);
   var k = nacl.sign.keyPair();
   var m = new Uint8Array(100);
   var i;
@@ -77,4 +76,5 @@ test('nacl.sign.detached and nacl.sign.detached.verify', function(t) {
   for (i = 0; i < 10; i++) sig[i] = 0;
   result = nacl.sign.detached.verify(m, sig, k.publicKey);
   t.equal(result, false, 'bad signature must not be verified');
+  t.end();
 });

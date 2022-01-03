@@ -1,5 +1,5 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js'
+import test from './helpers/tap-esm.js'
 
 var nonce = new Uint8Array(nacl.secretbox.nonceLength);
 var key = new Uint8Array(nacl.secretbox.keyLength);

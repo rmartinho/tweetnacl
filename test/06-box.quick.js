@@ -1,25 +1,24 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import util from './helpers/nacl-util.js'
 
 test('nacl.box.keyPair', function(t) {
-  t.plan(3);
   var keys = nacl.box.keyPair();
   t.ok(keys.secretKey && keys.secretKey.length === nacl.box.secretKeyLength, 'has secret key');
   t.ok(keys.publicKey && keys.publicKey.length === nacl.box.publicKeyLength, 'has public key');
   t.ok(util.encodeBase64(keys.secretKey) !== util.encodeBase64(keys.publicKey));
+  t.end();
 });
 
 test('nacl.box.keyPair.fromSecretKey', function(t) {
-  t.plan(2);
   var k1 = nacl.box.keyPair();
   var k2 = nacl.box.keyPair.fromSecretKey(k1.secretKey);
   t.equal(util.encodeBase64(k2.secretKey), util.encodeBase64(k1.secretKey));
   t.equal(util.encodeBase64(k2.publicKey), util.encodeBase64(k1.publicKey));
+  t.end();
 });
 
 test('nacl.box and nacl.box.open', function(t) {
-  t.plan(3);
   var clientKeys = nacl.box.keyPair();
   var serverKeys = nacl.box.keyPair();
   var nonce = new Uint8Array(nacl.box.nonceLength);
@@ -32,20 +31,20 @@ test('nacl.box and nacl.box.open', function(t) {
   t.equal(util.encodeBase64(clientBox), util.encodeBase64(serverBox));
   var serverMsg = nacl.box.open(serverBox, nonce, serverKeys.publicKey, clientKeys.secretKey);
   t.equal(util.encodeUTF8(serverMsg), util.encodeUTF8(msg));
+  t.end();
 });
 
 test('nacl.box.open with invalid box', function(t) {
-  t.plan(3);
   var clientKeys = nacl.box.keyPair();
   var serverKeys = nacl.box.keyPair();
   var nonce = new Uint8Array(nacl.box.nonceLength);
   t.equal(nacl.box.open(new Uint8Array(0), nonce, serverKeys.publicKey, clientKeys.secretKey), null);
   t.equal(nacl.box.open(new Uint8Array(10), nonce, serverKeys.publicKey, clientKeys.secretKey), null);
   t.equal(nacl.box.open(new Uint8Array(100), nonce, serverKeys.publicKey, clientKeys.secretKey), null);
+  t.end();
 });
 
 test('nacl.box.open with invalid nonce', function(t) {
-  t.plan(2);
   var clientKeys = nacl.box.keyPair();
   var serverKeys = nacl.box.keyPair();
   var nonce = new Uint8Array(nacl.box.nonceLength);
@@ -56,10 +55,10 @@ test('nacl.box.open with invalid nonce', function(t) {
           util.encodeUTF8(msg));
   nonce[0] = 255;
   t.equal(nacl.box.open(box, nonce, serverKeys.publicKey, clientKeys.secretKey), null);
+  t.end();
 });
 
 test('nacl.box.open with invalid keys', function(t) {
-  t.plan(4);
   var clientKeys = nacl.box.keyPair();
   var serverKeys = nacl.box.keyPair();
   var nonce = new Uint8Array(nacl.box.nonceLength);
@@ -73,4 +72,5 @@ test('nacl.box.open with invalid keys', function(t) {
   t.equal(nacl.box.open(box, nonce, badPublicKey, clientKeys.secretKey), null);
   var badSecretKey = new Uint8Array(nacl.box.secretKeyLength);
   t.equal(nacl.box.open(box, nonce, serverKeys.publicKey, badSecretKey), null);
+  t.end();
 });

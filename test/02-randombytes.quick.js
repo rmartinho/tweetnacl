@@ -1,9 +1,8 @@
 import nacl from './../nacl-fast-es.js';
-import test from './helpers/teston.js';
+import test from './helpers/tap-esm.js';
 import util from './helpers/nacl-util.js'
 
 test('nacl.randomBytes', async function(t) {
-  t.plan(1);
   var set = {}, s, i;
 
   for (i = 0; i < 10000; i++) {
@@ -16,4 +15,5 @@ test('nacl.randomBytes', async function(t) {
     set[s] = true;
   }
   t.pass('no collisions');
+  t.end();
 });
