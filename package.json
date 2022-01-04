@@ -35,8 +35,5 @@
   ],
   "author": "TweetNaCl-js contributors",
   "license": "Unlicense",
-  "homepage": "https://tweetnacl.js.org",
-  "devDependencies": {
-    "child_process": "^1.0.2"
-  }
+  "homepage": "https://tweetnacl.js.org"
 }

@@ -1,11 +1,10 @@
 // Measures timing variations and displays them
 import nacl from './../../nacl-fast-es.js';
-import test from './../helpers/teston.js';
+import test from './../helpers/tap-esm.js';
 
 var hex = function(x) { return Buffer.from(x).toString('hex'); };
 
 test('nacl.scalarMult timings', function(t) {
-  t.plan(1);
   function measure(x, prev) {
     var avgdiff = 0;
     for (var k = 0; k < 10; k++) {
@@ -54,5 +53,5 @@ test('nacl.scalarMult timings', function(t) {
   console.log('Re-test low: ' + rlo + 'ms');
   console.log('Re-test high: ' + rhi + 'ms');
   console.log('New difference: ' + (rhi - rlo) + 'ms');
-  t.pass();
+  t.end();
 });

@@ -1,12 +1,12 @@
-import nacl from './../../nacl-fast-es.js';
-import util from './../helpers/nacl-util.js';
+import nacl from '../../nacl-fast-es.js';
+import util from '../helpers/nacl-util.js';
 import {spawn} from 'child_process';
 import path from 'path';
-import test from './../helpers/teston.js';
+import test from './../helpers/tap-esm.js';
 
 function csign(sk, msg, callback) {
-  var hexsk = (new Buffer(sk)).toString('hex');
-  var p = spawn(path.resolve(__dirname, 'csign'), [hexsk]);
+  var hexsk = (Buffer.from(sk)).toString('hex');
+  var p = spawn(path.resolve('csign'), [hexsk]);
   var result = [];
   p.stdout.on('data', function(data) {
     result.push(data);
@@ -26,7 +26,7 @@ test('nacl.sign (C)', function(t) {
     var keys = nacl.sign.keyPair();
     var msg = nacl.randomBytes(num);
     var signedMsg = util.encodeBase64(nacl.sign(msg, keys.secretKey));
-    csign(keys.secretKey, new Buffer(msg), function(signedFromC) {
+    csign(keys.secretKey, Buffer.from(msg), function(signedFromC) {
       t.equal(signedMsg, signedFromC, 'signed messages should be equal');
       var openedMsg = nacl.sign.open(util.decodeBase64(signedFromC), keys.publicKey);
       t.ok(openedMsg!==null, 'open should succeed');
@@ -40,6 +40,6 @@ test('nacl.sign (C)', function(t) {
   }
 
   t.timeout = 20000;
-  t.plan(303);
   check(0);
+  t.end();
 });

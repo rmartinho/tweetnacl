@@ -1,13 +1,13 @@
-import nacl from './../../nacl-fast-es.js';
-import util from './../helpers/nacl-util.js'
+import nacl from '../../nacl-fast-es.js';
+import util from '../helpers/nacl-util.js'
 import {spawn} from 'child_process';
 import path from 'path';
-import test from './../helpers/teston.js';
+import test from './../helpers/tap-esm.js';
 
 function csecretbox(msg, n, k, callback) {
-  var hexk = (new Buffer(k)).toString('hex');
-  var hexn = (new Buffer(n)).toString('hex');
-  var p = spawn(path.resolve(__dirname, 'csecretbox'), [hexk, hexn]);
+  var hexk = (Buffer.from(k)).toString('hex');
+  var hexn = (Buffer.from(n)).toString('hex');
+  var p = spawn(path.resolve('csecretbox'), [hexk, hexn]);
   var result = [];
   p.stdout.on('data', function(data) {
     result.push(data);
@@ -32,7 +32,7 @@ test('nacl.secretbox (C)', function(t) {
   function check(num, maxNum, next) {
     var msg = nacl.randomBytes(num);
     var box = util.encodeBase64(nacl.secretbox(msg, n, k));
-    csecretbox(new Buffer(msg), n, k, function(boxFromC) {
+    csecretbox(Buffer.from(msg), n, k, function(boxFromC) {
       t.equal(box, boxFromC, 'secretboxes should be equal');
 	  t.ok(nacl.secretbox.open(util.decodeBase64(boxFromC), n, k), 'opening should succeed');
       if (num >= maxNum) {
@@ -44,7 +44,6 @@ test('nacl.secretbox (C)', function(t) {
   }
 
   t.timeout = 100000;
-  t.plan(2218);
   check(0, 1024, function() {
     check(16418, 16500, function() {
       check(1000000, 0, function() {
@@ -52,5 +51,5 @@ test('nacl.secretbox (C)', function(t) {
       });
     });
   });
-
+  t.end();
 });

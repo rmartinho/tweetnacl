@@ -8,7 +8,6 @@ var msg = new Uint8Array(10);
 var arr = [1,2,3];
 
 test('input type check', function(t) {
-  t.plan(40);
   t.throws(function() { nacl.secretbox(arr, nonce, key); }, TypeError);
   t.throws(function() { nacl.secretbox(msg, arr, key); }, TypeError);
   t.throws(function() { nacl.secretbox(msg, nonce, arr); }, TypeError);
@@ -64,5 +63,6 @@ test('input type check', function(t) {
 
   t.throws(function() { nacl.verify(arr, msg); }, TypeError);
   t.throws(function() { nacl.verify(msg, arr); }, TypeError);
+  t.end();
 });
 
