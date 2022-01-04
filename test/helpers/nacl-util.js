@@ -25,28 +25,14 @@ util.encodeUTF8 = function(arr) {
 if (typeof atob === 'undefined') {
     // Node.js
 
-    if (typeof Buffer.from !== 'undefined') {
-        // Node v6 and later
-        util.encodeBase64 = function (arr) { // v6 and later
-            return Buffer.from(arr).toString('base64');
-        };
+    util.encodeBase64 = function (arr) {
+        return Buffer.from(arr).toString('base64');
+    };
 
-        util.decodeBase64 = function (s) {
-            validateBase64(s);
-            return new Uint8Array(Array.prototype.slice.call(Buffer.from(s, 'base64'), 0));
-        };
-
-    } else {
-        // Node earlier than v6
-        util.encodeBase64 = function (arr) { // v6 and later
-            return (new Buffer(arr)).toString('base64');
-        };
-
-        util.decodeBase64 = function(s) {
-            validateBase64(s);
-            return new Uint8Array(Array.prototype.slice.call(new Buffer(s, 'base64'), 0));
-        };
-    }
+    util.decodeBase64 = function (s) {
+        validateBase64(s);
+        return new Uint8Array(Array.prototype.slice.call(Buffer.from(s, 'base64'), 0));
+    };
 
 } else {
     // Browsers
