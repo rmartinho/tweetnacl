@@ -2,7 +2,7 @@ TweetNaCl.js
 ============
 
 ES6 version of the [tweetnacl-js](https://github.com/dchest/tweetnacl-js) `nacl-fast.js`
-Work in browser and in node (with "-r esm")
+Work in browser and in node.
 
 Documentation
 =============
@@ -16,7 +16,7 @@ Usage
 
 All API functions accept and return bytes as `Uint8Array`s.  If you need to
 encode or decode strings, use functions from
-<https://github.com/dchest/tweetnacl-util-js> or one of the more robust codec
+[nacl-util.js](/test/helpers/nacl-util.js) or one of the more robust codec
 packages.
 
 In Node.js v4 and later `Buffer` objects are backed by `Uint8Array`s, so you
