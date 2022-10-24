@@ -2,7 +2,7 @@ TweetNaCl.js
 ============
 
 ES6 version of the [tweetnacl-js](https://github.com/dchest/tweetnacl-js) `nacl-fast.js`
-Work in browser and in node.
+Work in browser and in NodeJS version 14.
 
 Documentation
 =============
@@ -287,23 +287,23 @@ different lengths, or their contents differ.
 ### Testing
 ----------
 
-To run test in Node.js:
+To run test in NodeJS version 14:
 
     $ npm run test-all
 
     $ npm run test-quick
 
-To run itest in browser:
+To run in browser:
 
 [browser test](https://hakanols.github.io/tweetnacl-es6/test/browser/index.html)
 
 ### Benchmarking
 
-To run benchmarks in Node.js:
+To run benchmarks in NodeJS version 14:
 
     $ npm run bench
 
-To run itest in browser:
+To run in browser:
 
 [browser benchmarks](https://hakanols.github.io/tweetnacl-es6/test/benchmark/bench.html)
 
