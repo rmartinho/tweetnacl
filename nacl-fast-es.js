@@ -2360,7 +2360,7 @@ await (async function() {
     });
   } else {
     // Node.js.
-    const { randomBytes } = await import('crypto');
+    const { randomBytes } = await import('node:crypto');
     if (randomBytes) {
       nacl.setPRNG(function(x, n) {
         let i, v = randomBytes(n);
