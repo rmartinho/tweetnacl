@@ -1,6 +1,6 @@
 {
   "name": "@rmf1723/tweetnacl",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Port of TweetNaCl cryptographic library to JavaScript es6",
   "main": "nacl-fast-es.js",
   "module": "nacl-fast-es.js",
